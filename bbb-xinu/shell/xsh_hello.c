@@ -42,6 +42,7 @@ shellcmd xsh_hello(int nargs, char *args[])
 		    }
 		    else 
 		    printf("The command entered is wrong");
+		     return 1;
                  }
             }
 	}

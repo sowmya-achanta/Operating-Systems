@@ -23,7 +23,7 @@ shellcmd xsh_hello(int nargs, char *args[])
         {     
             /* Output info for '--help' argument */
 
-	      if (nargs == 2 && strncmp(args[1], "help", 4) == 0)
+	      if (nargs == 2 && strncmp(args[1], "--help", 7) == 0)
               {
 		printf("Usage: %s String\n", args[0]);
 		printf("Enter hello followed by a string to display the message\n");
@@ -42,6 +42,7 @@ shellcmd xsh_hello(int nargs, char *args[])
 		    }
 		    else 
 		    printf("The command entered is wrong");
+		     return 1;
                  }
             }
 	}
