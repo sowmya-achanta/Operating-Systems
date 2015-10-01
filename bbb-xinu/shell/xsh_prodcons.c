@@ -41,6 +41,7 @@ shellcmd xsh_prodcons(int nargs, char *args[])
                if (nargs == 2 && strncmp(args[0], "prodcons", 8) == 0 ) 
 	         {                        
                    count = atoi(args[1]);
+              //     printf("This is the value of count %d\n", count);
 
                  }
                  

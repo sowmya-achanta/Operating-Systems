@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include <stddef.h>
-#include <xinu.h>
-
-
 
 
    /*Global variable for producer consumer*/

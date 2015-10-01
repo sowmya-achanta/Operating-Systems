@@ -41,6 +41,7 @@ shellcmd xsh_prodcons(int nargs, char *args[])
                if (nargs == 2 && strncmp(args[0], "prodcons", 8) == 0 ) 
 	         {                        
                    count = atoi(args[1]);
+                   printf("This is the value of count %d\n", count);
 
                  }
                  
@@ -51,8 +52,7 @@ shellcmd xsh_prodcons(int nargs, char *args[])
       //Look at the definations of function create and resume in exinu/system folder for reference.      
       resume( create(produce, 1024, 20, "produce", 1, count) );
       resume( create(consume, 1024, 20, "consume", 1, count) );
-      free(n);
-      
+         
 return 0;
 }
 

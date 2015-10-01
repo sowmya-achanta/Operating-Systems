@@ -12,12 +12,13 @@
       //print produced value e.g. produced : 8 
        
        int i;
-       
-       for(i=0; i<=count; i++)
+       printf("The produced value is: %d\n", n);
+       for(i=0; i<count; i++)
        {
-           printf("The produced value is: %d\n", n);
+           
            wait(consumed);
            n++;
+           printf("The produced value is: %d\n", n);
            signal(produced);
         }
       n = 0;
