@@ -1,12 +1,16 @@
+#include <stdio.h>
 #include <stddef.h>
-#include <stdio.h> 
+#include <xinu.h>
 
 
 
-/*Global variable for producer consumer*/
-  extern int n; /*this is just declaration*/
 
-/*function Prototype*/
-  //void consume(int count);
+   /*Global variable for producer consumer*/
+   extern int n; /*this is just declaration*/
 
-  //void produce(int count);
+   /* Declare the required semaphores */
+   extern sid32 consumed, produced;   
+
+   /*function Prototype*/
+   void consume(int count);
+   void produce(int count);

@@ -1,10 +1,10 @@
 #include <xinu.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <prodcons.h>
+#include <stdlib.h>
 
-int n;                 //Definition for global variable 'n'
+int n;                             //Definition for global variable 'n
+sid32 consumed, produced;     //Definition for semaphores
+
 /*Now global variable n will be on Heap so it is accessible all the processes i.e. consume and produce*/
 
 shellcmd xsh_prodcons(int nargs, char *args[])
@@ -12,8 +12,10 @@ shellcmd xsh_prodcons(int nargs, char *args[])
       //Argument verifications and validations
 
       int count = 2000;             //local varible to hold count
-      //int pid_producer;
-      //int pid_consumer;
+      
+     /*Initialise semaphores*/
+      consumed = semcreate(0);      
+      produced = semcreate(1);
 
      /* Check argument count */
 
@@ -48,9 +50,10 @@ shellcmd xsh_prodcons(int nargs, char *args[])
        //create the process producer and consumer and put them in ready queue.
       //Look at the definations of function create and resume in exinu/system folder for reference.      
       resume( create(produce, 1024, 20, "produce", 1, count) );
-      resume( create(consume, 1024, 100, "consume", 1, count) );
-
-return 1;
+      resume( create(consume, 1024, 20, "consume", 1, count) );
+      free(n);
+      
+return 0;
 }
 
 
