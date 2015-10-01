@@ -1,0 +1,33 @@
+1. How exactly is sychronization achieved using semaphore in our assignnment?
+
+We've two semaphores 'produced' that is initialized to 1 and 'consumed' initialized to 0.
+
+  - The program xsh_prodcons.c, creates and calls the procucer process where:  
+    -- At wait(consumed), since semaphore 'consumed' is 0,it is decremented to -1 and the 'producer.c' is placed in waiting queue. 
+  - Since the 'producer.c' is waiting, 'consumer.c' is called:
+    -- At wait(produced), since semaphore 'produced' is 1, the 'consumer.c' proceeds execution by decrementing the semaphore 'produced' to 0.
+    --'consumer.c' prints the value of 'n'.
+    --'consumer.c'calls signal(consumed): this will increments semaphore'consumed' to 0, bringing 'producer.c' out of waiting queue ready to be run.
+    -- At the next iteration in 'consumer.c', at wait(produced), since semaphore 'produced' is 0,it is decremented to -1 and the 'consumer.c' is placed in waiting queue.
+  - Now 'producer.c' takes over and produces the next value for n
+    -- At signal(produced), increments the semaphore 'produced' to 0, bringing 'consumer.c' out of waiting queue ready to be run.
+    -- At the next iteration in 'producer.c', at wait(consumed), since semaphore 'consumed' is 0,it is decremented to -1 and the 'producer.c' is placed in waiting queue.
+    -- 'consumer.c' takes over and this procedure continues until the value of 'n' is less than or equal to count.
+
+Essentially, the 'producer.c' process waits until the value it produced is consumed by 'consumer.c'.
+
+2. Can the above sychronization be achieved with just one semphore? Why or why not?
+
+Two semaphores are required, one for putting producer to wait and the other for consumer to wait. If there is only one semaphore, then it will be signalled and waited by the same process, hence the other process cannot be run until the first one finishes execution.
+
+Task Division:
+
+1. Sowmya Achanta - Producer process
+2. Navdeep Kaur - Consumer process
+3. Combined effort for xsh_prodcons.c and other header files, code compiling and report writing
+
+Repository:
+https://github.iu.edu/omachant/OS-Fall-2015.git
+
+References:
+Operating System Design The Xinu Approach Linksys Version 
