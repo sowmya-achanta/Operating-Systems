@@ -12,10 +12,10 @@ shellcmd xsh_prodcons(int nargs, char *args[])
       //Argument verifications and validations
 
       int count = 2000;             //local varible to hold count
-      
+       n =0;
      /*Initialise semaphores*/
-      consumed = semcreate(0);      
-      produced = semcreate(1);
+      consumed = semcreate(1);      
+      produced = semcreate(0);
 
      /* Check argument count */
 

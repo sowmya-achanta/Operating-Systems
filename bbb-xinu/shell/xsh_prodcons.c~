@@ -14,8 +14,8 @@ shellcmd xsh_prodcons(int nargs, char *args[])
       int count = 2000;             //local varible to hold count
       
      /*Initialise semaphores*/
-      consumed = semcreate(0);      
-      produced = semcreate(1);
+      consumed = semcreate(1);      
+      produced = semcreate(0);
 
      /* Check argument count */
 
@@ -41,7 +41,7 @@ shellcmd xsh_prodcons(int nargs, char *args[])
                if (nargs == 2 && strncmp(args[0], "prodcons", 8) == 0 ) 
 	         {                        
                    count = atoi(args[1]);
-                   printf("This is the value of count %d\n", count);
+              //     printf("This is the value of count %d\n", count);
 
                  }
                  
