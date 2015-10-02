@@ -1,13 +1,14 @@
 1. How exactly is sychronization achieved using semaphore in our assignnment?
 
-We've two semaphores 'produced' that is initialized to 1 and 'consumed' initialized to 0.
+We've two semaphores 'produced' that is initialized to 0 and 'consumed' initialized to 1.
 
   - The program xsh_prodcons.c, creates and calls the procucer process where:  
-    -- At wait(consumed), since semaphore 'consumed' is 0,it is decremented to -1 and the 'producer.c' is placed in waiting queue. 
+    -- At wait(consumed), since semaphore 'consumed' is 1,it is decremented to 0, the 'producer.c' executes producing a value.
+    -- The consumer process is then signalled, incrementing semaphore 'produced' to 1.
   - Since the 'producer.c' is waiting, 'consumer.c' is called:
     -- At wait(produced), since semaphore 'produced' is 1, the 'consumer.c' proceeds execution by decrementing the semaphore 'produced' to 0.
     --'consumer.c' prints the value of 'n'.
-    --'consumer.c'calls signal(consumed): this will increments semaphore'consumed' to 0, bringing 'producer.c' out of waiting queue ready to be run.
+    --'consumer.c'calls signal(consumed): this will increments semaphore'consumed' to 1, bringing 'producer.c' out of waiting queue ready to be run.
     -- At the next iteration in 'consumer.c', at wait(produced), since semaphore 'produced' is 0,it is decremented to -1 and the 'consumer.c' is placed in waiting queue.
   - Now 'producer.c' takes over and produces the next value for n
     -- At signal(produced), increments the semaphore 'produced' to 0, bringing 'consumer.c' out of waiting queue ready to be run.
@@ -31,3 +32,5 @@ https://github.iu.edu/omachant/OS-Fall-2015.git
 
 References:
 Operating System Design The Xinu Approach Linksys Version 
+
+
