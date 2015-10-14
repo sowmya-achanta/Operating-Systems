@@ -1,5 +1,5 @@
 #include <xinu.h>
-#include <prodcons.h>
+//#include <prodcons.h>
 
 
 
@@ -11,7 +11,7 @@
      //print consumed value e.g. consumed : 8
      
      int i;// = n;
-      for(i=0; i<count; i++)
+      for(i=0; i<=count; i++)
        { 
            //printf("The consumed value is: %d\n", n);
            wait(produced);

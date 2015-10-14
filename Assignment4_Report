@@ -1,0 +1,47 @@
+In file xsh_prodcons:
+-Added the given snippet and code to accept the '-f' argument to the existing file. 
+-Creates three futures f1, f2, f3 and three pairs of producer-consumer threads, each pair sharing one future
+-Calls future_alloc to allocate memory for f1, f2, f3
+
+In file future_alloc.c:
+- Takes future_flags as an argument from xsh_prodcons.c
+- Created a future variable f
+- Allocated memory using getmem
+- If memory allocation fails, NULL is returned, otherwis:
+   f->flag is set to future_flags(here FUTURE_EXCLUSIVE)
+   f->state is set to FUTURE_EMPTY (initialization)
+
+In file future_free.c:
+-Takes a future as an argument and frees the memory allocated to it.
+-Called from the future_cons.c once the produced value is consumed and printed on stdout.
+-Returns SYSERR if it fails to free the memory
+
+In file future_cons.c:
+- Calls the future_get syscall to obtain the current value produced by future_prod.c
+- If the current value is not returned, it returns -1 else it prints the value and frees the memory.
+
+In file future_prod.c:
+-Takes a future and typecasts it to 'j'.
+-Calls future_set to set the value of future to j
+
+In file future_get.c:
+-Takes future and a value sent from future_cons as arguments.
+-If future's state is empty, then it will get the pid of the calling thread and sets the future state to waiting and stays in that state until it becomes valid. 
+-While it's waiting the producer executes, sets the value and future state becomes valid
+-Once the state is valid,the value set by the producer in future->value will be obtained by consumer, and setting the state to empty.
+
+In file future_set.c:
+-Takes future and value as arguments.
+-Called from future_prod.c.
+-If future state is empty or waiting, sets the future->value to the value it gets from producer and the state to valid.
+
+Task Division:
+Sowmya Achanta:
+future_set.c
+Future_alloc.c
+
+Navdeep Kaur:
+future_get.c
+future_free.c
+
+Combined effort: xsh_prodcons.c, future_cons.c, future_prod.c, future.h

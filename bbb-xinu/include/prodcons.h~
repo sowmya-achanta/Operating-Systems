@@ -11,3 +11,7 @@
    /*function Prototype*/
    void consume(int count);
    void produce(int count);
+  
+  /*function Prototype*/
+   int future_cons(future *fut);
+   int future_prod(future *fut);
