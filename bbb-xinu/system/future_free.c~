@@ -7,12 +7,20 @@ typedef struct futent future;
 syscall future_free(future* f)
 {
 
- if (freemem(f, sizeof(future)))
+if  (f->flag == FUTURE_SHARED)
+{
+if (freemem(f->get_queue, sizeof(f->get_queue)))
+return OK;
+else
+return SYSERR;
+}
+
+if (freemem(f, sizeof(future)))
    return OK;
 else
     return SYSERR;
 
-}
 
+}
 
 

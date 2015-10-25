@@ -7,12 +7,12 @@ typedef struct futent future;
 syscall future_free(future* f)
 {
 
- if (freemem(f, sizeof(future)))
+if (freemem(f, sizeof(future)))
    return OK;
 else
     return SYSERR;
 
-}
 
+}
 
 

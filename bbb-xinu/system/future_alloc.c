@@ -8,6 +8,8 @@ future* future_alloc(int future_flags)
 
 future* f;
 
+
+
 f = (future *)getmem(sizeof(future));
 
 if (f == NULL)
@@ -15,6 +17,7 @@ if (f == NULL)
 
 f->flag = future_flags;
 f->state = FUTURE_EMPTY;
+
 
 return f;
 

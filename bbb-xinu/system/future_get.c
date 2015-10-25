@@ -6,24 +6,58 @@ typedef struct futent future;
 syscall future_get(future *f, int *value)
 {
 
-if (f->state == FUTURE_EMPTY)
-{
-   f->pid = getpid(); //get thread id  and store it in future's pid
-   f->state = FUTURE_WAITING; // put to waiting queue
+pid32 pid;
 
-		while(f->state != FUTURE_VALID)
-		 {
-		   kprintf("");
-		 }
+
+if (f->flag == FUTURE_EXCLUSIVE) 
+{
+	if (f->state == FUTURE_EMPTY){
+	   f->pid = getpid(); //get thread id  and store it in future's pid
+	   f->state = FUTURE_WAITING; // put to waiting queue
+           while(f->state != FUTURE_VALID){
+                 kprintf("");}
+	}
+        if(f->state == FUTURE_VALID){
+           *value = f->value;
+           f->state = FUTURE_EMPTY;
+           return OK;}
+
 }
 
-if(f->state == FUTURE_VALID)
-	{
-	*value = f->value;
-	f->state = FUTURE_EMPTY;
-	return OK;
-	}
+else if (f->flag == FUTURE_SHARED){
+	   if (f->state == FUTURE_EMPTY || f->state == FUTURE_WAITING){
+	
+  	   f->pid = getpid(); //get thread id  and store it in future's pid
+	   f->state = FUTURE_WAITING; // put to waiting queue
+	   genqueue_pid(f->get_queue, f->pid);
+                 suspend(f->pid);
+           }
+           if(f->state == FUTURE_VALID){
+             *value = f->value;
+             return OK;}         
+}
 
+else if (f->flag == FUTURE_QUEUE){
+        if (f->state == FUTURE_EMPTY || f->state == FUTURE_WAITING){
+           if (front_sq != -1 && rear_sq != -1){
+             f->pid = getpid();
+             pid = sdequeue_pid(f->set_queue);
+             f->state = FUTURE_WAITING;
+             //genqueue_pid(f->get_queue, f->pid);
+             resume(pid);
+            }
+           else {
+              f->pid = getpid();
+              f->state = FUTURE_WAITING;
+              gfenqueue_pid(f->get_queue, f->pid);
+              suspend(f->pid);
+           }
+       }
+       if(f->state == FUTURE_VALID){
+             *value = f->value;
+             f->state = FUTURE_EMPTY;
+             return OK;}
+}
 
 return SYSERR;
 

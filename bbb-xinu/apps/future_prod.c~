@@ -2,13 +2,10 @@
 #include <future.h>
 
 uint32 future_prod(future *fut) {
-printf("In producer\n");
   int i, j;
-  j = (int)fut;
-  for (i=0; i<1000; i++) {
-    j += i;
-  }
+  j = 5;
+
   future_set(fut, &j);
-//printf("Setting the value \n %d", j);
+
   return OK;
 }

@@ -1,0 +1,17 @@
+#define MAX 10
+
+typedef struct {
+int data[MAX];
+int front=-1;
+int rear=-1;
+} queue;
+
+
+void enqueue_pid(pid32 pid);
+void dequeue_pid();
+
+ 
+
+ 
+
+ 

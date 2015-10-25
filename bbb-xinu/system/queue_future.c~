@@ -1,0 +1,66 @@
+#include <xinu.h>
+#include <future.h>
+
+
+queue* enqueue_pid(queue* q, pid32 pid)
+{
+  
+  if(q->front==0 && q->rear==MAX-1)
+    return q;
+  
+  else if(q->front==-1&&q->rear==-1)
+  {
+      q->front=q->rear=0;
+      q->data[q->rear]=pid; 
+      return q;
+      //kprintf("This is the data inserted one %d\n", q.data[q.rear]);
+ 
+  }
+  
+  else if(q->rear==MAX-1 && q->front!=0)
+  {
+    q->rear=0;
+    q->data[q->rear]=pid;
+    return q;
+     //kprintf("This is the data inserted two %d\n", q.data[q.rear]);
+  }
+  
+  else
+  {
+      q->rear++;
+      q->data[q->rear]=pid; 
+      return q;
+       //kprintf("This is the data inserted three %d\n", q.data[q.rear]);
+  }
+  
+
+}
+
+pid32 dequeue_pid(queue* q)
+{
+  pid32 pid;
+  if(q->front==-1)
+  {
+      return pid;
+  }
+
+  pid =q->data[q->front];
+
+  if(q->front==q->rear){
+     q->front=q->rear=-1;
+     return pid;
+  }
+  else
+  {
+    if(q->front==MAX-1){
+      q->front=0;
+      return pid;
+    }
+    else
+      q->front++;
+      printf("pid dequeued\n %d", pid);
+      return pid;
+  }
+}
+
+

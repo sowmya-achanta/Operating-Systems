@@ -1,0 +1,101 @@
+
+#include <xinu.h>
+#include <future.h>
+
+
+int front_gq = -1;
+int rear_gq = -1 ;
+
+int front_gfq = -1;
+int rear_gfq = -1;
+
+int front_sq = -1;
+int rear_sq = -1 ;
+
+int genqueue_pid(int get_queue[], pid32 pid)
+{
+  
+ if (rear_gq == MAX -1) 
+   return SYSERR;
+ else{
+     if (front_gq == -1)
+      front_gq = 0;
+     rear_gq = rear_gq + 1;
+     //kprintf("rear pid enq %d %d\n",rear_gq, pid);
+     get_queue[rear_gq] = pid;
+     }
+ return 0;
+}
+
+
+pid32 gdequeue_pid(int get_queue[])
+{
+  pid32 pid;
+  if (front_gq == - 1 || front_gq > rear_gq)
+      return SYSERR;
+  else{
+      pid = get_queue[front_gq];
+	
+      front_gq = front_gq + 1;  
+      //kprintf("front,pid dq %d %d\n",front_gq, pid);
+      return pid;
+      } 
+}
+
+int senqueue_pid(int set_queue[], pid32 pid)
+{
+  
+ if (rear_sq == MAX-1) 
+   return SYSERR;
+ else{
+     if (front_sq == -1)
+      front_sq = 0;
+     rear_sq = rear_sq + 1;
+     set_queue[rear_sq] = pid;
+     }
+ return 0;
+}
+
+
+pid32 sdequeue_pid(int set_queue[])
+{
+  pid32 pid;
+  if (front_sq == - 1 || front_sq > rear_sq)
+      return SYSERR;
+  else{
+      pid = set_queue[front_sq];
+      front_sq = front_sq + 1;  
+      return pid;
+      } 
+}
+
+int gfenqueue_pid(int get_queue[], pid32 pid)
+{
+  
+ if (rear_gfq == MAX -1) 
+   return SYSERR;
+ else{
+     if (front_gfq == -1)
+      front_gfq = 0;
+     rear_gfq = rear_gfq + 1;
+     get_queue[rear_gfq] = pid;
+     }
+ return 0;
+}
+
+
+pid32 gfdequeue_pid(int get_queue[])
+{
+  pid32 pid;
+  if (front_gfq == - 1 || front_gfq > rear_gfq)
+      return SYSERR;
+  else{
+      pid = get_queue[front_gfq];
+	
+      front_gfq = front_gfq + 1;  
+      return pid;
+      } 
+}
+
+
+

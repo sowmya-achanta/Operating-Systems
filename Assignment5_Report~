@@ -1,0 +1,25 @@
+File: future_queue.c
+
+-Handles insertion and deletion for get_queue, set_queue for FUTURE_QUEUE, FUTURE_SHARED
+-get_queue, set_queue are implemented using arrays with a MAX SIZE 4( because for both the queues, at max four processes will be pushed for each FUTURE_SHARED and FUTURE_QUEUE)
+
+File: future_get.c and future_set.c
+- When FUTURE_SHARED flag is set:
+  -> future_get enqueues all the consumers and suspends them changing their future states to waiting
+  -> future_set(called once because there is only one producer) changes the future state to valid and dequeues each waiting process and     resumes it.
+  -> The resumed process will print the produced value
+
+-When FUTURE_QUEUE flag is set:
+ -> future_get : If it finds that the set_queue is not empty, it will dequeue the process from set_queue, resumes that proces. If it finds set_queue is empty, then it enqueues and suspends itself, changing future state to waiting. 
+ -> future_set : If it finds that he get_queue is not empty, it will dequeue the process from get_queue, resumes that process. If it finds set_queue is empty, then it enqueues and suspends itself.
+
+The other files are retained from Assignment 4, except for xsh_prodcons.h that creates processes for f_shared, f_queue and future.h that declares the variables and arrays necessary for implementing the queue.
+
+Task division:
+
+Navdeep Kaur - future_get.c
+Sowmya Achanta - future_set.c
+
+Combined effort:
+future_queue.c, xsh_prodcons.c, future.h
+

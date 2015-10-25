@@ -7,7 +7,13 @@
 #define FUTURE_VALID 	  2         
 
 /* modes of operation for future*/
-#define FUTURE_EXCLUSIVE  1	
+#define FUTURE_EXCLUSIVE  1
+#define FUTURE_SHARED     2
+#define FUTURE_QUEUE      3
+
+#define MAX 4
+
+extern int front_gq, rear_gq, front_sq, rear_sq, front_gfq, rear_gfq;
 
 typedef struct futent
 {
@@ -15,7 +21,16 @@ typedef struct futent
    int flag;		
    int state;         	
    pid32 pid;
+   int get_queue[MAX];
+   int set_queue[MAX];
 } future;
+
+
+int genqueue_pid(int get_queue[], pid32 pid);
+pid32 gdequeue_pid(int get_queue[]);
+
+int senqueue_pid(int set_queue[], pid32 pid);
+pid32 sdequeue_pid(int set_queue[]);
 
 /* Interface for system call */
 future* future_alloc(int future_flags);
@@ -23,8 +38,11 @@ syscall future_free(future*);
 syscall future_get(future*, int*);
 syscall future_set(future*, int*);
 
+/*function Prototype*/
+uint32 future_cons(future *fut);
+uint32 future_prod(future *fut);
+
 #endif /* _FUTURE_H_ */
 
-/*function Prototype*/
-   uint32 future_cons(future *fut);
-   uint32 future_prod(future *fut);
+
+	
