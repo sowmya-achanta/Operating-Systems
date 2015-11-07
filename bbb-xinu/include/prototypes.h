@@ -117,6 +117,9 @@ extern	syscall	getc(did32);
 /* in file getitem.c */
 extern	pid32	getfirst(qid16);
 
+/* For Assignment 6 in file my_getmem.c */
+extern	char	*my_getmem(uint32);
+
 /* in file getmem.c */
 extern	char	*getmem(uint32);
 
@@ -127,6 +130,9 @@ extern	pid32	getpid(void);
 extern	syscall	getprio(pid32);
 
 /* in file getstk.c */
+extern	char	*getstk(uint32);
+
+/* in file my_getstk.c added for Assignment-6*/
 extern	char	*getstk(uint32);
 
 /* in file gettime.c */

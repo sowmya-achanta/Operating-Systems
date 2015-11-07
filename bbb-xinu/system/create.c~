@@ -68,14 +68,23 @@ pid32	create(
 	savsp = (uint32)saddr;
         
 	if(strncmp(prptr->prname, "anotherdummy", 12) == 0){
+	//uint32	*curr;
+	//curr=saddr;
 	char *myptrstkbase;
+	//myptrstkbase = prptr->prstkbase;
 	myptrstkbase=saddr;
 	uint32 mystksize=ssize;
+	printf("Befor create%x\n", myptrstkbase);
         int i;
+	int count = 0;
 	for(i=0;i<mystksize;i++){
+           //*curr = 9;
 	   *myptrstkbase='F';
-            myptrstkbase = (uint32) (myptrstkbase) - 1;}
-
+           //printf("Setting to %d\n", count);
+		//myptrstkbase = myptrstkbase-1;
+		myptrstkbase = (uint32) (myptrstkbase) - 1;
+		count++;}
+            //curr--;}
         }
 
         

@@ -1,0 +1,31 @@
+xsh $ getmemlist get91
+The address of free memory block is, 81019dac length of block is 4294826240
+The address of free memory block is, 81040700 length of block is 519723264
+
+xsh $ getmemlist get94
+The address of free memory block is, 81019dac length of block:4294817024
+hello 20
+The address of f allocated by my_getmem 81040700
+
+xsh $ getmemlist get91
+Unhandled exception. Link Register: 0x810022c0
+
+panic: **** EXCEPTION ****
+
+
+xsh $ getmemlist get91
+The address of free memory block is, 81019dac length of block is 4294826240
+The address of free memory block is, 81040700 length of block is 519723264
+
+xsh $ getmemlist get94
+The address of free memory block is, 81019dac length of block:4294825216
+hello 20
+The address of f allocated by my_getmem 81040700
+
+xsh $ getmemlist get91
+The address of free memory block is, 81019dac length of block is 4294826232
+The address of free memory block is, 81040708 length of block is 519723256
+
+
+
+
