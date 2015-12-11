@@ -202,7 +202,8 @@ extern	void	eth_ntoh(struct netpacket *);
 
 /* in file netstart.c */
 
-extern	void	netstart(void);
+//extern	void	netstart(void);
+extern	void	netstart(char *,char *);//added this line and minused the above line for A7
 
 /* in file kill.c */
 

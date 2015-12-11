@@ -3,7 +3,7 @@
 
 typedef struct futent future;
 
-syscall future_get(future *f, int *value)
+syscall future_get(future *f, char *value) /*changed value type from int to char for Assignment 7 */
 {
 
 pid32 pid;
@@ -11,14 +11,16 @@ pid32 pid;
 
 if (f->flag == FUTURE_EXCLUSIVE) 
 {
-	if (f->state == FUTURE_EMPTY){
+	if (f->state == FUTURE_EMPTY || f->state == FUTURE_WAITING){
 	   f->pid = getpid(); //get thread id  and store it in future's pid
 	   f->state = FUTURE_WAITING; // put to waiting queue
            while(f->state != FUTURE_VALID){
-                 kprintf("");}
-	}
+                 kprintf("");}  
+        }
+
         if(f->state == FUTURE_VALID){
-           *value = f->value;
+           //*value = f->value;commented this and added below line for Assignment7
+	   value = f->value;
            f->state = FUTURE_EMPTY;
            return OK;}
 

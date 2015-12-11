@@ -17,7 +17,7 @@ extern int front_gq, rear_gq, front_sq, rear_sq, front_gfq, rear_gfq;
 
 typedef struct futent
 {
-   int *value;		
+   char *value;		
    int flag;		
    int state;         	
    pid32 pid;
@@ -35,12 +35,14 @@ pid32 sdequeue_pid(int set_queue[]);
 /* Interface for system call */
 future* future_alloc(int future_flags);
 syscall future_free(future*);
-syscall future_get(future*, int*);
-syscall future_set(future*, int*);
+syscall future_get(future*, char*); /*changed from int* to char* for ass7 */
+syscall future_set(future*, char*);	/*changed from int* to char* for ass7 */
 
 /*function Prototype*/
 uint32 future_cons(future *fut);
 uint32 future_prod(future *fut);
+uint32 future_networks(future *net_fut);
+uint32 future_udpnetworks(future *net_fut);
 
 #endif /* _FUTURE_H_ */
 

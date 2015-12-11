@@ -74,6 +74,7 @@ pid32	create(
         int i;
 	for(i=0;i<mystksize;i++){
 	   *myptrstkbase='F';
+            //kprintf("The stack address%c\n", *myptrstkbase);
             myptrstkbase = (uint32) (myptrstkbase) - 1;}
 
         }

@@ -1,3 +1,9 @@
+/* in file xsh_udpclient.c */
+extern	shellcmd  xsh_udpclient    (int32, char *[]);
+
+/* in file xsh_udp.c */
+extern	shellcmd  xsh_udpcom    (int32, char *[]);
+
 /* in file xsh_getmemlist.c */
 extern	shellcmd  xsh_getmemlist(int32, char *[]);
 

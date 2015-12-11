@@ -34,7 +34,7 @@ syscall	kill(
 		myptrstkbase = (char *) ((uint32) (myptrstkbase) - 1);}
 	}	
           
-	printf("The stack size of the process is %d\n",  prptr->prstklen - count);
+	//printf("The stack size of the process is %d\n",  prptr->prstklen - count);
 
 
 	

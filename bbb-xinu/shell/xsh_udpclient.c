@@ -1,0 +1,85 @@
+/* udpclient.c - udpclient */
+
+#include <xinu.h>
+#include <stdio.h>
+#include <string.h>
+
+
+#define REM_IP 0xC0A80164
+/*------------------------------------------------------------------------
+ * xsh_udpclient - shell command that acts as a UDP client 
+ *------------------------------------------------------------------------
+ */
+shellcmd xsh_udpclient(int nargs, char *args[])
+{
+	int32	retval;			/* return value from sys calls	*/
+	int32	retval_server;	
+	uint32	localip;		/* local IP address		*/
+	uint32	remip;			/* remote sender's IP address	*/
+	uint16	remport;		/* remote sender's UDP port	*/
+	char	buff[1500];		/* buffer for incoming reply	*/
+	int32	msglen;			/* length of outgoing message	*/
+	int32	slot;			/* slot in UDP table 		*/
+	uint16	clientport= 1148;	/* port number for UDP client	*/
+	struct udpentry *udptr; 	/*pointer to table entry	*/
+	
+	/* For argument '--help', emit a help message	*/
+
+	if (nargs == 2 && strncmp(args[1], "--help", 7) == 0) {
+		printf("Use: %s\n\n", args[0]);
+		printf("Description:\n");
+		printf("\tBecome a UDP client. Pass the destination ipaddress, port and the message you want to send\n");
+		printf("Options:\n");
+		printf("\t--help\t display this help and exit\n");
+		return 0;
+	}
+
+	/* Check for valid IP address argument */
+
+	if (nargs != 4) {
+		fprintf(stderr, "%s: arguments expected\n", args[0]);
+		fprintf(stderr, "Try '%s --help' for more information\n",args[0]);
+		return 1;
+	}
+        
+ 	/* remote server's ip and port and the message to be sent*/
+	if (dot2ip(args[1], &remip) == SYSERR) {
+		fprintf(stderr, "%s: invalid IP address argument\r\n",
+			args[0]);
+		return 1;
+	}
+	 remport = atoi(args[2]);
+         strncpy(buff,args[3], strlen(args[3]));
+	 msglen = strlen(args[3]);
+	
+	/* register local UDP port */
+
+	slot = udp_register(remip, remport, clientport);
+	
+	if (slot == SYSERR) {
+		fprintf(stderr, "%s: could not reserve UDP port %d\n",args[0], clientport);
+		return 1;
+	}
+         
+        
+      /*send an outgoing datagram and receive the same buffer from server*/
+		retval = udp_sendto(slot, remip, remport, buff, msglen);
+		if (retval == SYSERR) {
+			fprintf(stderr, "%s: udp_sendto failed\n",args[0]);
+			return 1;}
+		
+		retval_server = udp_recvaddr(slot, &remip, &remport, buff,
+						sizeof(buff), 600000);
+
+		printf("From server %s \n", buff);
+	
+	/* free the client side port here: 1148*/
+	udptr = &udptab[slot];
+	//printf("The UDP slot details %d %d", slot, udptab->udlocport);
+	udptr->udstate = UDP_FREE;
+			
+	return 0;
+}
+
+
+

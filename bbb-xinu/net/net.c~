@@ -79,8 +79,8 @@ process	netin ()
 
 	while(1) {
 			for(i=0; i< 1; i++) {
-				//kprintf("checking");
-				if ((arpcache[i].arstate == AR_RESOLVED) && (clktime - arpcache[i].time_of_entry) >= 10 ) {
+				kprintf("checking");
+				if ((arpcache[i].arstate == AR_RESOLVED) && (clktime - arpcache[i].time_of_entry) >= 20 ) {
 				
 				arpcache[i].arstate = AR_FREE;}
 			}

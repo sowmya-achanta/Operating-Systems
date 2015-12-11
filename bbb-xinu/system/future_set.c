@@ -4,16 +4,18 @@
 
 typedef struct futent future;
 
-syscall future_set(future *f, int *value)
+syscall future_set(future *f, char *value) /* changed value type from int to char for Assignment7 */
 {
 pid32 pid;
 
 if (f->flag == FUTURE_EXCLUSIVE){
 	if (f->state == FUTURE_EMPTY || f->state == FUTURE_WAITING ){
-	   f->value = *value;
+	   //f->value = *value; commented this and added below line for Assignment7
+	   f->value = value;
 	   f->state = FUTURE_VALID;
 	   return OK;
 	 }
+
 }
 
 if (f->flag == FUTURE_SHARED){

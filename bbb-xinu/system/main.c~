@@ -69,6 +69,16 @@ process	main(void)
   kprintf("\n...creating a shell\n");
   recvclr();
   resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
+//kprintf("After creating shell-resume");
+int i;
+for(i=0; i< ARP_SIZ; i++) {
+		if ((arpcache[i].arstate == AR_RESOLVED) && (clktime - arpcache[i].time_of_entry) >= 20) {
+			//arptr->arstate == AR_FREE;
+			arpcache[i].arstate = AR_FREE;
+                        printf("Entering to set state free");
+
+		}
+	} 
   
   /* Wait for shell to exit and recreate it */
   

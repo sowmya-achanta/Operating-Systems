@@ -48,9 +48,10 @@ shellcmd xsh_prodcons(int nargs, char *args[])
 	           if (strncmp(args[1], "-f", 2) != 0){
 	           count = atoi(args[1]);
       		   //create the process producer and consumer and put them in ready queue.
-      		   //Look at the definations of function create and resume in exinu/system folder for reference.      
+      		   //Look at the definitions of function create and resume in exinu/system folder for reference.      
 	           resume( create(produce, 1024, 20, "produce", 1, count) );
 	           resume( create(consume, 1024, 20, "consume", 1, count) );
+		  
 	           }
 	          
 		  else {
@@ -61,19 +62,20 @@ shellcmd xsh_prodcons(int nargs, char *args[])
 		  f_queue = future_alloc(FUTURE_QUEUE);
 		 
 		// Test FUTURE_EXCLUSIVE
-		  kprintf("FUTURE EXCLUSIVE \n");
-		  resume( create(future_cons, 1024, 20, "fcons1", 1, f_exclusive) );
-		  resume( create(future_prod, 1024, 20, "fprod1", 1, f_exclusive) );
-	          //future_free(f_exclusive);
+		  //resume( create(future_cons, 1024, 20, "fcons1", 1, f_exclusive) );
+		  //resume( create(future_prod, 1024, 20, "fprod1", 1, f_exclusive) );
+		   resume( create(future_networks, 1024, 20, "fnet", 1, f_exclusive ));
+		   resume( create(future_udpnetworks, 1024, 20, "fnetudp", 1, f_exclusive));
+		  
 
+		/*commented for Assignment 7
 		// Test FUTURE_SHARED
-
 		  resume( create(future_cons, 1024, 20, "fcons2", 1, f_shared) );
 		  resume( create(future_cons, 1024, 20, "fcons3", 1, f_shared) );
 		  resume( create(future_cons, 1024, 20, "fcons4", 1, f_shared) ); 
 		  resume( create(future_cons, 1024, 20, "fcons5", 1, f_shared) );
 		  resume( create(future_prod, 1024, 20, "fprod2", 1, f_shared) );
-		  //future_free(f_shared);
+
 	
 		//Test FUTURE_QUEUE
 		  resume( create(future_cons, 1024, 20, "fcons6", 1, f_queue) );
@@ -83,12 +85,8 @@ shellcmd xsh_prodcons(int nargs, char *args[])
 		  resume( create(future_prod, 1024, 20, "fprod3", 1, f_queue) );
 		  resume( create(future_prod, 1024, 20, "fprod4", 1, f_queue) );
 		  resume( create(future_prod, 1024, 20, "fprod5", 1, f_queue) );
-		  resume( create(future_prod, 1024, 20, "fprod6", 1, f_queue) );
-                  //future_free(f_queue);
-                  //future_free(f_exclusive);
-                  //future_free(f_shared);
-                  //future_free(f_queue);
-				  
+		  resume( create(future_prod, 1024, 20, "fprod6", 1, f_queue) ); */
+
 	          }
                }
               }

@@ -1,0 +1,63 @@
+/* udpclient.c - udpclient */
+
+#include <xinu.h>
+#include <stdio.h>
+#include <string.h>
+#include <future.h>
+
+#define REM_IP 0xC0A80164
+/*------------------------------------------------------------------------
+ * future_udpnetworks--- for network future implementation
+ *------------------------------------------------------------------------
+ */
+uint32 future_udpnetworks(future *net_fut)
+{
+	int32	retval;			/* return value from sys calls	*/
+	int32	retval_server;	
+	uint32	localip;		/* local IP address		*/
+	uint32	remip;			/* remote sender's IP address	*/
+	uint16	remport;		/* remote sender's UDP port	*/
+	char	buff[1500];		/* buffer for incoming reply	*/
+	int32	msglen;			/* length of outgoing message	*/
+	int32	slot;			/* slot in UDP table 		*/
+	uint16	clientport= 1148;	/* port number for UDP client	*/
+	struct udpentry *udptr; 	/*pointer to table entry	*/
+	//char *fut_buff;
+	
+ 	/* remote server's ip and port and the message to be sent*/
+	if (dot2ip("192.168.1.100", &remip) == SYSERR) {
+		fprintf(stderr, ": invalid IP address argument\r\n");
+		return 1;
+	}
+	 remport = 1567;
+         strncpy(buff,"hello from future", strlen("hello from future"));
+	 msglen = strlen(buff);
+	
+	/* register local UDP port */
+
+	slot = udp_register(remip, remport, clientport);      
+        
+      /*send an outgoing datagram and receive the same buffer from server*/
+		retval = udp_sendto(slot, remip, remport, buff, msglen);
+		
+		retval_server = udp_recvaddr(slot, &remip, &remport, buff,
+						sizeof(buff), 600000);
+		
+		//code to set future on buff
+		
+		//fut_buff = buff;
+		//future_set(net_fut, fut_buff);
+		
+		printf("From server %s \n", buff);
+	
+	/* free the client side port here: 1148*/
+	udptr = &udptab[slot];
+	//printf("The UDP slot details %d %d", slot, udptab->udlocport);
+	udptr->udstate = UDP_FREE;
+        future_set(net_fut, buff);
+			
+	return 0;
+}
+
+
+

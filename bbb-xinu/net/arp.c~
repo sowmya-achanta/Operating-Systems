@@ -316,6 +316,7 @@ int32	arp_alloc ()
 
 	for (slot=0; slot < ARP_SIZ; slot++) {
 		if (arpcache[slot].arstate == AR_RESOLVED) {
+			printf("RESOLVED SLOT %d\n",slot);
 			memset((char *)&arpcache[slot],NULLCH, sizeof(struct arpentry));
 			return slot;
 		}
