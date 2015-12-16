@@ -8,7 +8,6 @@ syscall future_get(future *f, char *value) /*changed value type from int to char
 
 pid32 pid;
 
-
 if (f->flag == FUTURE_EXCLUSIVE) 
 {
 	if (f->state == FUTURE_EMPTY || f->state == FUTURE_WAITING){
@@ -19,8 +18,8 @@ if (f->flag == FUTURE_EXCLUSIVE)
         }
 
         if(f->state == FUTURE_VALID){
-           //*value = f->value;commented this and added below line for Assignment7
-	   value = f->value;
+           //*value = f->value;commented this and added below line for Assignment
+	   memcpy(value,f->value,strlen(f->value));
            f->state = FUTURE_EMPTY;
            return OK;}
 

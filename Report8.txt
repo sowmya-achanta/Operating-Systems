@@ -1,0 +1,42 @@
+In file- fs.h:
+
+Modified the filetable data structure to store file name.
+
+Of the given code, the following functions were needed to implement filesystem:
+
+1. fs_create()
+- creates a file if no other file exists with same name.
+- allocates an inode number to the file. The inode blocks is mapped to the device blocks(bs.c)
+
+2. fs_open()
+- for each entry in files sytem's root directory, check if file name matches.
+- If there exists such a file, check if it is opened.
+- If opened, return the filee pointer as file descriptor
+- Else, add an entry to the file table.
+
+3. fs_seek()
+- seek to the position after the given number of bytes(offset) from where the current position of file descriptor.
+
+4. fs_close()
+- there must be an entry in the file table, if it has to be closed
+- access that entry  and delete it from file table(make the fields NULL)
+
+5. fs_read()
+- first get the inode number entry of the given file from file table.
+- get the number of inode blocks and size and populate the inode structure for the given file, by calling the fs_get_inode_by_num()
+- point to the file descriptor position on the device
+- Read the nbytes by calling the bread function.
+- return the fd position(moves by nbytes)
+
+6. fs.write()
+- first get the inode number entry of the given file from file table.
+- get the number of inode blocks and size and populate the inode structure for the given file, by calling the fs_get_inode_by_num()
+- copy the buf into data_bwrite to write to the blocks.
+- calculate how many blocks are required
+- call bwrite function
+- return the fd position moved by nbytes
+
+Contributions:
+Navdeep Kaur: fread(), fwrite()
+Sowmya Achanta: fopen(), fclose(), fseek()
+

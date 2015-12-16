@@ -13,7 +13,7 @@ uint32 future_cons(future *fut) {
     printf("future_get failed\n");
     return -1;
   }
-  //printf("it produced %d\n", i);
+  //printf("it produced %d\n", i); commented this one for Ass7 and added below line
   printf("it produced %d\n", buff);
    future_free(fut); 
   return OK;

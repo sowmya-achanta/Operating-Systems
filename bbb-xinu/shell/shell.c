@@ -34,7 +34,8 @@ const	struct	cmdent	cmdtab[] = {
         {"reset", FALSE, xsh_reset},
         {"getmemlist", FALSE, xsh_getmemlist},
         {"udpcom", FALSE, xsh_udpcom},
-	{"udpclient", FALSE, xsh_udpclient}
+	{"udpclient", FALSE, xsh_udpclient},
+	{"fstest", FALSE, xsh_fstest}
 
 };
 
